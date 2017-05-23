@@ -33,13 +33,7 @@ public class ClipImageViewAsCircle extends Application {
 		ScrollPane scrollPane = new ScrollPane();
 		Circle circle = new Circle(200, 200, 200);
 		VBox vBox = new VBox();
-		HBox hBox = new HBox();
 		Scene rootScene = new Scene(vBox, 0, 0);
-		Scene clipScene = new Scene(hBox);
-		Button btn = new Button("clip");
-		btn.setOnAction(e -> {
-			stage.setScene(clipScene);
-		});
 
 		scrollPane.setContent(imageView);
 		vBox.getChildren().add(scrollPane);
