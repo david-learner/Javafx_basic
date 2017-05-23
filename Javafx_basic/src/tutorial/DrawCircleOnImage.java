@@ -58,94 +58,44 @@ public class DrawCircleOnImage extends Application {
 		imageLayer.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent mouseEvent) {
-				dragContext.mouseAnchorX = mouseEvent.getX();
-				dragContext.mouseAnchorY = mouseEvent.getY();
-				System.out.println("mouseAnchor : " + dragContext.mouseAnchorX + " " + dragContext.mouseAnchorY);
-				circle.setRadius(0);
-				circle.setStroke(Color.BISQUE);
-				circle.setStrokeWidth(3);
-				circle.setCenterX(dragContext.mouseAnchorX);
-				circle.setCenterY(dragContext.mouseAnchorY);
-				System.out.println("circle center : " + circle.getCenterX() + " " + circle.getCenterY());
-				circle.setFill(Color.TRANSPARENT);
+				if(mouseEvent.isPrimaryButtonDown()) {
+					dragContext.mouseAnchorX = mouseEvent.getX();
+					dragContext.mouseAnchorY = mouseEvent.getY();
+					System.out.println("mouseAnchor : " + dragContext.mouseAnchorX + " " + dragContext.mouseAnchorY);
+					circle.setRadius(0);
+					circle.setStroke(Color.BISQUE);
+					circle.setStrokeWidth(3);
+					circle.setCenterX(dragContext.mouseAnchorX);
+					circle.setCenterY(dragContext.mouseAnchorY);
+					System.out.println("circle center : " + circle.getCenterX() + " " + circle.getCenterY());
+					circle.setFill(Color.TRANSPARENT);
+					dragContext.initialTranslateX = circle.getTranslateX();
+					dragContext.initialTranslateY = circle.getTranslateY();
+				}else if(mouseEvent.isSecondaryButtonDown()) {
+
+				}
+				
 			}
 		});
 		
 		imageLayer.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(final MouseEvent mouseEvent) {
-				double x = mouseEvent.getX() - dragContext.mouseAnchorX;
-				double y = mouseEvent.getY() - dragContext.mouseAnchorY;
-				double radius = Math.sqrt(Math.abs(x) + Math.abs(y));
-				dragContext.moveDistance = Math.pow(radius, 2);
-				System.out.println("moveDistance : " + dragContext.moveDistance);
-				circle.setRadius(dragContext.moveDistance);
+				if(mouseEvent.isPrimaryButtonDown()) {
+					double x = mouseEvent.getX() - dragContext.mouseAnchorX;
+					double y = mouseEvent.getY() - dragContext.mouseAnchorY;
+					double radius = Math.sqrt(Math.abs(x) + Math.abs(y));
+					dragContext.moveDistance = Math.pow(radius, 2);
+					//System.out.println("moveDistance : " + dragContext.moveDistance);
+					System.out.println("primary");
+					circle.setRadius(dragContext.moveDistance);
+				}else if(mouseEvent.isSecondaryButtonDown()) {
+					circle.setTranslateX(mouseEvent.getX() - dragContext.mouseAnchorX);
+					circle.setTranslateY(mouseEvent.getY() - dragContext.mouseAnchorY);
+				}
+				
 			}
 		});
-
-//		imageView.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(final MouseEvent mouseEvent) {
-//				dragContext.mouseAnchorX = mouseEvent.getX();
-//				dragContext.mouseAnchorY = mouseEvent.getY();
-//				System.out.println("mouseAnchor : " + dragContext.mouseAnchorX + " " + dragContext.mouseAnchorY);
-//				circle.setRadius(0);
-//				circle.setStroke(Color.BISQUE);
-//				circle.setStrokeWidth(3);
-//				circle.setCenterX(dragContext.mouseAnchorX);
-//				circle.setCenterY(dragContext.mouseAnchorY);
-//				System.out.println("circle center : " + circle.getCenterX() + " " + circle.getCenterY());
-//				circle.setFill(Color.TRANSPARENT);
-//			}
-//		});
-//
-//		imageView.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(final MouseEvent mouseEvent) {
-//				double x = mouseEvent.getX() - dragContext.mouseAnchorX;
-//				double y = mouseEvent.getY() - dragContext.mouseAnchorY;
-//				double radius = Math.sqrt(Math.abs(x) + Math.abs(y));
-//				dragContext.moveDistance = Math.pow(radius, 2);
-//				System.out.println("moveDistance : " + dragContext.moveDistance);
-//				circle.setRadius(dragContext.moveDistance);
-//			}
-//		});
-//
-//		circle.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(final MouseEvent mouseEvent) {
-//				if (mouseEvent.isPrimaryButtonDown()) {
-//					dragContext.mouseAnchorX = mouseEvent.getX();
-//					dragContext.mouseAnchorY = mouseEvent.getY();
-//					circle.setRadius(0);
-//					circle.setStroke(Color.BISQUE);
-//					circle.setStrokeWidth(3);
-//					circle.setCenterX(dragContext.mouseAnchorX);
-//					circle.setCenterY(dragContext.mouseAnchorY);
-//					circle.setFill(Color.TRANSPARENT);
-//				}else if(mouseEvent.isSecondaryButtonDown()) {
-//					dragContext.mouseAnchorX = mouseEvent.getX();
-//					dragContext.mouseAnchorY = mouseEvent.getY();
-//				}
-//			}
-//		});
-//
-//		circle.addEventFilter(MouseEvent.MOUSE_DRAGGED, new EventHandler<MouseEvent>() {
-//			@Override
-//			public void handle(final MouseEvent mouseEvent) {
-//				if (mouseEvent.isPrimaryButtonDown()) {
-//					double x = mouseEvent.getX() - dragContext.mouseAnchorX;
-//					double y = mouseEvent.getY() - dragContext.mouseAnchorY;
-//					double radius = Math.sqrt(Math.abs(x) + Math.abs(y));
-//					dragContext.moveDistance = Math.pow(radius, 2);
-//					circle.setRadius(dragContext.moveDistance);
-//				} else if (mouseEvent.isSecondaryButtonDown()) {
-//					circle.setTranslateX(mouseEvent.getX() - dragContext.mouseAnchorX);
-//					circle.setTranslateY(mouseEvent.getY() - dragContext.mouseAnchorY);
-//				}
-//
-//			}
-//		});
 		return imageView;
 	}
 
